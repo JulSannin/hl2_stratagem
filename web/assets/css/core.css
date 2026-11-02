@@ -1,0 +1,38 @@
+:root {
+  color-scheme: dark;
+  --hd-bg: #101510;
+  --hd-case: #191e1d;
+  --hd-case-edge: #3b4644;
+  --hd-text: #f1f0e4;
+  --hd-muted: #9da89b;
+  --hd-gold: #e2c66c;
+  --hd-green: #a8d080;
+  --hd-red: #d97970;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--hd-text);
+  background: var(--hd-bg);
+}
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; width: 100%; min-height: 100%; background: var(--hd-bg); }
+html { min-height: 100%; }
+body { min-width: 300px; min-height: 100vh; min-height: 100dvh; font-size: 14px; overflow-x: hidden; }
+button, input, select { font: inherit; }
+button { color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--hd-gold); outline-offset: 2px; }
+.app-shell {
+  min-height: 100vh; min-height: 100dvh; width: 100%; display: flex; flex-direction: column;
+  background: radial-gradient(ellipse at 50% -20%, #647d4724, transparent 58%), var(--hd-bg);
+}
+.eyebrow { color: var(--hd-gold); font-size: 10px; font-weight: 800; letter-spacing: 1.6px; }
+h1, h2, h3, p { margin: 0; }
+.boot-screen { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 13px; color: var(--hd-gold); letter-spacing: 2px; font-size: 12px; }
+.boot-mark, .brand-mark { display: grid; place-items: center; color: #1c2119; background: var(--hd-gold); font-weight: 900; clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 100%, 0 100%); }
+.boot-mark { width: 50px; height: 50px; font-size: 23px; }
+.boot-screen span { color: var(--hd-muted); font-size: 10px; }
+.toast { position: fixed; z-index: 100; bottom: max(12px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 24px); padding: 12px 16px; border: 1px solid #82945d; background: #263322; box-shadow: 0 8px 28px #000b; color: #f0f1e4; font-size: 13px; line-height: 1.35; }
+.toast b { color: var(--hd-green); margin-right: 9px; }
+.toast.is-error { border-color: #a65f55; background: #34201d; }
+.toast.is-error b { color: #f0a49a; }
+@media (max-width: 380px) {
+  body { min-width: 280px; }
+}

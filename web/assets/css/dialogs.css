@@ -1,0 +1,78 @@
+/* Responsive settings popup. The dialog body scrolls; close is the only top control. */
+.dialog-backdrop {
+  position: fixed; z-index: 90; inset: 0; display: grid; place-items: start center; align-content: start;
+  padding: max(10px, env(safe-area-inset-top)) clamp(8px, 2vw, 22px) 10px; overflow-y: auto;
+  background: #020503c9; backdrop-filter: blur(7px);
+}
+.settings-dialog {
+  position: relative; width: min(640px, 100%); max-height: min(760px, calc(100dvh - 20px)); margin: 0 auto;
+  display: flex; flex-direction: column; min-width: 0; overflow: hidden;
+  border: 1px solid #46513f; border-radius: 14px;
+  background: linear-gradient(155deg, #1a211b 0%, #0e130f 100%);
+  color: var(--hd-text); box-shadow: 0 22px 70px #000e, inset 0 1px 0 #ffffff0a;
+}
+.dialog-heading {
+  flex: 0 0 auto; min-height: 48px; display: flex; align-items: center; justify-content: flex-end;
+  padding: 9px 11px 0; border: 0;
+}
+.dialog-close {
+  flex: 0 0 36px; width: 36px; height: 36px; display: grid; place-items: center;
+  border: 1px solid #3c483d; border-radius: 8px; background: #0c120e; color: #d8dfd1; cursor: pointer;
+}
+.dialog-close:hover { border-color: #82916d; background: #182219; }
+.dialog-close svg { width: 19px; height: 19px; display: block; }
+.settings-body {
+  min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  padding: 8px clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px);
+  display: grid; gap: clamp(14px, 2.5vh, 22px);
+  scrollbar-width: thin; scrollbar-color: #56634d #101610;
+}
+.settings-section { min-width: 0; display: grid; gap: 11px; }
+.settings-section-title { color: #d6bb63; font-size: 10px; font-weight: 850; letter-spacing: 1.3px; }
+.settings-grid { min-width: 0; display: grid; gap: 11px; }
+.settings-grid-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.settings-grid-timing { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.settings-field { min-width: 0; display: flex; flex-direction: column; gap: 7px; color: #b9c2b3; font-size: 12px; font-weight: 650; }
+.settings-field > span { line-height: 1.3; }
+.settings-field input, .settings-field select {
+  width: 100%; min-width: 0; min-height: 42px; padding: 0 11px;
+  border: 1px solid #354338; border-radius: 7px; outline: 0;
+  background: #080d09; color: #f0f2e9; font-size: 14px;
+}
+.settings-field input:focus, .settings-field select:focus { border-color: #a5b17c; box-shadow: 0 0 0 2px #a5b17c24; }
+.settings-field small { color: #788675; font-size: 10px; font-weight: 450; }
+.settings-direction-field { gap: 5px; }
+.settings-direction-glyph { min-height: 18px; color: #e2c66c; font-size: 19px; line-height: 18px; font-weight: 800; }
+.dialog-actions {
+  flex: 0 0 auto; display: flex; justify-content: flex-end; padding: 12px clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px);
+  border-top: 1px solid #303b31; background: #0d130f;
+}
+.primary-button {
+  min-width: 112px; min-height: 42px; padding: 0 18px; border: 1px solid #d7bd65;
+  border-radius: 6px; background: #dfc66f; color: #1a2014;
+  cursor: pointer; font-size: 11px; font-weight: 850; letter-spacing: .7px;
+}
+.primary-button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 560px) {
+  .dialog-backdrop { padding: 7px; }
+  .settings-dialog { width: 100%; max-height: calc(100dvh - 20px); border-radius: 11px; }
+  .settings-grid-controls, .settings-grid-timing { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .settings-field input, .settings-field select { min-height: 40px; }
+}
+@media (max-width: 380px) {
+  .settings-grid-controls, .settings-grid-timing { grid-template-columns: 1fr; }
+  .primary-button { min-width: 0; width: 100%; }
+}
+@media (max-height: 520px) {
+  .dialog-backdrop { padding: 6px; }
+  .settings-dialog { max-height: calc(100dvh - 20px); }
+  .dialog-heading { min-height: 39px; padding: 5px 9px 0; }
+  .dialog-close { width: 32px; height: 32px; }
+  .settings-body { padding: 7px 13px; gap: 11px; }
+  .settings-section { gap: 7px; }
+  .settings-grid { gap: 8px; }
+  .settings-field { gap: 4px; }
+  .settings-field input, .settings-field select { min-height: 34px; }
+  .dialog-actions { padding: 8px 13px; }
+  .primary-button { min-height: 36px; }
+}

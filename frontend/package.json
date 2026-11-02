@@ -1,0 +1,11 @@
+{
+  "name": "hd2-stratagem-lan-ui",
+  "version": "0.21.0",
+  "private": true,
+  "description": "Componentized React 16 UMD interface served locally by FastAPI; React runtime is vendored, no build step required on the game PC.",
+  "dependencies": {
+    "react": "16.0.0",
+    "react-dom": "16.0.1"
+  },
+  "note": "The source is split into components and modular stylesheets under src/components and src/styles. Runtime files are copied to web/assets and served locally."
+}

@@ -1,0 +1,129 @@
+/* Minimal console: only the physical Numpad and one settings gear. */
+.workspace {
+  width: 100%; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center;
+  padding: 12px; overflow: visible;
+}
+.console-layout {
+  --gear-size: clamp(42px, 9vw, 64px);
+  --console-gap: clamp(8px, 1.8vw, 14px);
+  width: min(100%, calc((100dvh - 24px) * .8 + var(--gear-size) + var(--console-gap)), 780px);
+  display: grid; grid-template-columns: minmax(0, 1fr) var(--gear-size);
+  align-items: start; gap: var(--console-gap);
+}
+.numpad-case {
+  min-width: 0; width: 100%; aspect-ratio: 4 / 5; padding: clamp(7px, 1.4vw, 12px);
+  border: 1px solid #292929; border-radius: clamp(12px, 2vw, 20px);
+  background: linear-gradient(145deg, #151515, #090909 78%);
+  box-shadow: inset 0 2px 18px #000c, 0 16px 38px #0008;
+}
+.numpad-grid {
+  width: 100%; height: 100%; display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: clamp(5px, 1vw, 9px);
+}
+.numpad-key-wrap { min-width: 0; min-height: 0; position: relative; }
+.numpad-key {
+  position: relative; display: grid; place-items: center; width: 100%; height: 100%; min-width: 0; min-height: 0;
+  padding: 4px; overflow: hidden; border: 1px solid #1a1a1a; border-radius: clamp(8px, 1.5vw, 13px);
+  background: #000; color: #f4f4f4; cursor: pointer; appearance: none; -webkit-appearance: none;
+  box-shadow: inset 0 1px 0 #171717, inset 0 -3px 6px #000, 0 3px 0 #000;
+  transition: transform 75ms ease, box-shadow 75ms ease, border-color 75ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.numpad-key:hover { background: #000; border-color: #303030; }
+.numpad-key:active,
+.numpad-key.is-game-pressed {
+  background: #000; transform: translateY(3px) scale(.985); border-color: #4b5156;
+  box-shadow: inset 0 5px 12px #000, inset 0 0 0 1px #252a2e, 0 0 14px #b9d5ff22, 0 0 0 #000;
+}
+.numpad-key:focus { outline: none; }
+.numpad-key:focus-visible { outline: 2px solid #8b9297; outline-offset: 2px; }
+.numpad-key-wrap.is-active .numpad-key { border-color: #565d60; }
+.num-key-label {
+  display: block; color: #f4f4f4; font-size: clamp(20px, 4.5vw, 38px); font-weight: 750;
+  line-height: 1; user-select: none; text-shadow: none;
+}
+.num-key-icon {
+  display: block; width: 74%; height: 74%; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center;
+  filter: none !important; opacity: 1; mix-blend-mode: normal; pointer-events: none; user-select: none;
+}
+.key-add .num-key-icon { width: 48%; height: 48%; }
+.key-0 .num-key-icon { width: 48%; height: 70%; }
+.key-decimal .num-key-icon { width: 62%; height: 62%; }
+.key-divide .num-key-icon, .key-multiply .num-key-icon, .key-subtract .num-key-icon { width: 66%; height: 66%; }
+.num-key-icon.icon-unavailable { opacity: 0; }
+
+/* Delayed description above an assigned key: full name + directional code. */
+.key-description-tooltip {
+  position: absolute; z-index: 40; left: 50%; bottom: calc(100% + 9px);
+  width: max-content; max-width: min(240px, calc(100vw - 24px));
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  padding: 9px 11px; border: 1px solid #77704d; border-radius: 8px;
+  background: #121711f5; color: #f3f0df; box-shadow: 0 8px 26px #000c;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translate(-50%, 5px);
+  transition: opacity .12s ease, transform .12s ease, visibility 0s linear .12s;
+}
+.key-description-name {
+  display: block; max-width: 100%; color: #f3f0df; font-size: clamp(11px, 1.8vw, 14px);
+  font-weight: 750; line-height: 1.25; text-align: center; white-space: normal; overflow-wrap: anywhere;
+}
+.key-description-arrows {
+  display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 4px;
+}
+.key-description-arrows i {
+  display: grid; place-items: center; min-width: 21px; height: 21px; padding: 0 3px;
+  border: 1px solid #56634b; border-radius: 4px; background: #222b20;
+  color: #e2c66c; font-size: 14px; font-style: normal; font-weight: 800; line-height: 1;
+}
+.numpad-key-wrap:hover { z-index: 30; }
+.numpad-key-wrap:hover .key-description-tooltip,
+.numpad-key-wrap:focus-within .key-description-tooltip {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+  transition-delay: .5s, .5s, 0s;
+}
+/* Keep edge-key labels inside the viewport instead of centering them off-screen. */
+.numpad-key-wrap.key-7 .key-description-tooltip,
+.numpad-key-wrap.key-4 .key-description-tooltip,
+.numpad-key-wrap.key-1 .key-description-tooltip,
+.numpad-key-wrap.key-0 .key-description-tooltip {
+  left: 0; transform: translateY(5px);
+}
+.numpad-key-wrap.key-7:hover .key-description-tooltip,
+.numpad-key-wrap.key-4:hover .key-description-tooltip,
+.numpad-key-wrap.key-1:hover .key-description-tooltip,
+.numpad-key-wrap.key-0:hover .key-description-tooltip,
+.numpad-key-wrap.key-7:focus-within .key-description-tooltip,
+.numpad-key-wrap.key-4:focus-within .key-description-tooltip,
+.numpad-key-wrap.key-1:focus-within .key-description-tooltip,
+.numpad-key-wrap.key-0:focus-within .key-description-tooltip { transform: translateY(0); }
+.numpad-key-wrap.key-subtract .key-description-tooltip,
+.numpad-key-wrap.key-add .key-description-tooltip,
+.numpad-key-wrap.key-decimal .key-description-tooltip { left: auto; right: 0; transform: translateY(5px); }
+.numpad-key-wrap.key-subtract:hover .key-description-tooltip,
+.numpad-key-wrap.key-add:hover .key-description-tooltip,
+.numpad-key-wrap.key-decimal:hover .key-description-tooltip,
+.numpad-key-wrap.key-subtract:focus-within .key-description-tooltip,
+.numpad-key-wrap.key-add:focus-within .key-description-tooltip,
+.numpad-key-wrap.key-decimal:focus-within .key-description-tooltip { transform: translateY(0); }
+.settings-gear {
+  width: var(--gear-size); height: var(--gear-size); aspect-ratio: 1; display: grid; place-items: center;
+  border: 1px solid #282828; border-radius: clamp(9px, 1.5vw, 14px); background: #090909; color: #dedede;
+  box-shadow: inset 0 1px 0 #1b1b1b, 0 4px 0 #000, 0 9px 24px #0008; cursor: pointer;
+  transition: transform 80ms ease, box-shadow 80ms ease, border-color 80ms ease;
+}
+.settings-gear:hover { background: #090909; border-color: #4a4a4a; }
+.settings-gear:active { transform: translateY(3px); box-shadow: inset 0 4px 8px #000, 0 1px 0 #000; }
+.settings-gear svg { width: 62%; height: 62%; fill: currentColor; }
+@media (max-height: 500px) {
+  .workspace { padding: 8px; }
+  .console-layout { width: min(100%, calc((100dvh - 16px) * .8 + var(--gear-size) + var(--console-gap))); }
+}
+@media (max-width: 360px) {
+  .workspace { padding: 8px; }
+  .console-layout { --gear-size: 42px; --console-gap: 7px; }
+  .num-key-label { font-size: clamp(18px, 7vw, 26px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .numpad-key, .settings-gear, .key-description-tooltip { transition: none; }
+}
